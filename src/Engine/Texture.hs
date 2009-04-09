@@ -14,14 +14,10 @@ import Engine.Vector
 import Graphics.Rendering.OpenGL (($=))
 import qualified Graphics.Rendering.OpenGL as GL
 
---------[ texture mapping ]----------------------------------------------------
-
 type Texture      a b = Proj a (Color b)
 type Texture_UV   a b = Texture (UV   a) b
 type Texture_UVW  a b = Texture (UVW  a) b
 type Texture_UVWT a b = Texture (UVWT a) b
-
---------[ render UV texture to bitmap ]----------------------------------------
 
 {-renderGlyph
   :: UV Int -> Bool

@@ -28,6 +28,9 @@ torusUV r0 r1 (V2 u v) =
   let V2 u' v' = circular1_UV r1 v in
   lift3Dc v' $ circular1_UV (r0 + u') u
 
+spiralUV
+  :: (Ipol a, Scalar a, Floating a)
+  => Range a -> Range a -> a -> a -> Proj_UV_Vertex3 a a
 spiralUV r0 r1 h k (V2 u v) =
   let V2 u' v' = circular1_UV (r1 ..< u) v in
   lift3Dc ((h * u) + v') $ circular_UV k ((r0 ..< u) + u') u

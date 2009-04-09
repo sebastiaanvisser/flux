@@ -1,9 +1,9 @@
-Name:                gl
+Name:                flux
 Version:             0.0
 Build-Type:          Simple
 Build-Depends:       base, OpenGL, GLUT, time, containers, fclabels, bytestring ==0.9.1.4, monads-fd
 
-Executable:          gl
-GHC-Options:         -O -Wall
+Executable:          flux
+GHC-Options:         -O -Wall -fno-warn-orphans
 Main-is:             Main.hs
 HS-Source-Dirs:      src

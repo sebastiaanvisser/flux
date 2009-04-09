@@ -1,6 +1,5 @@
 module Engine.Normal where
 
-import Control.Applicative
 import Engine.Projection
 import Engine.Vector
 import Engine.Functor
@@ -43,6 +42,9 @@ normal3
 normal3 p = getN . tangent3 p
 
 
+derivative_UV
+  :: (Floating b, Fractional a)
+  => Proj_UV_Vertex3 a b -> UV a -> UVW b
 derivative_UV vp (V2 u v) =
   let a = normal3 vp (V2 u v)
   in V3
@@ -50,6 +52,9 @@ derivative_UV vp (V2 u v) =
     (angle1 a (V3 0 1 0))
     (angle1 a (V3 0 0 1))
 
+flux_UV
+  :: (Floating b, Fractional a)
+  => Proj_UV_Vertex3 a b -> UV a -> UV b
 flux_UV vp (V2 u v) =
   let a = normal3 vp (V2 u v)
       b = normal3 vp (V2 (u+0.1) v)

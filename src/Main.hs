@@ -20,7 +20,7 @@ main = setup test3D
       do displayPre "sexytime!"
          t' <- timer t
          p' <- dragPersp (DragPerspConfig (V3 1 1 1) (V3 2 2 2)) p
-         (light', lt) <- rotatingLight 10 10 light
+         (light', _) <- rotatingLight 10 10 light
          perspective p'
          ptr' <- test ptr
          displayPost

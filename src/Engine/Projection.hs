@@ -11,6 +11,10 @@ type Proj_UV   a b = Proj (UV   a) b
 type Proj_UVW  a b = Proj (UVW  a) b
 type Proj_UVWT a b = Proj (UVWT a) b
 
+type Proj_UV_UV    a b = Proj_UV   a (UV   b)
+type Proj_UVW_UVW  a b = Proj_UVW  a (UVW  b)
+type Proj_UVWT_UVW a b = Proj_UVWT a (UVWT b)
+
 type Proj_Vertex       a b = Proj a b
 
 type Proj_Vertex3      a b = Proj a (Vertex3 b)
