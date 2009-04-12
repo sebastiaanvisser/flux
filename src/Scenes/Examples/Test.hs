@@ -19,13 +19,8 @@ import OpenGL.SurfaceUV
 import System.IO
 import qualified Graphics.Rendering.OpenGL as GL
 
---          fh <- openBinaryFile "data/torus0.obj" ReadWriteMode
---          withForeignPtr fptr $ \p -> hGetBuf fh p (n * s)
---          withForeignPtr fptr $ \p -> hPutBuf fh p (n * s)
---          hClose fh
-
-test o = 
-  (emptyCallbacks o) {
+test ~(o, raw) = 
+  (emptyCallbacks (o, raw)) {
     cbDisplay = renderSurface
   , cbSetup   = setupSurface
   }
@@ -33,9 +28,11 @@ test o =
 
     setupSurface =
       do [o'] <- (GL.genObjectNames 1) :: IO [GL.BufferObject]
-         GL.bindBuffer GL.ArrayBuffer $= Just o'
-         (n, s, _) <- renderToVBO mySurface o'
-         return o'
+--          raw <- renderSurface3ToVBO o' mySurface
+--          renderSurface3ToFile "data/torus0.obj" mySurface
+         raw <- storeFileInVBO "data/torus0.obj" o'
+
+         return (o', raw)
 
     renderSurface =
       do GL.colorMaterial              $= Just (GL.Front, GL.Diffuse) 
@@ -44,8 +41,8 @@ test o =
          GL.materialSpecular  GL.Front $= (GL.Color4 1.0 1.0 1.0 1.0)
          GL.materialEmission  GL.Front $= (GL.Color4 0.0 0.0 0.0 0.0)
          GL.materialShininess GL.Front $= 80
-         display o mySurface
-         return o
+         displayVBO o raw
+         return (o, raw)
 
 mySurface =
   Surface3 {
@@ -56,7 +53,7 @@ mySurface =
   , sSampling = sampler
   }
 
-sampler  = linear1 (V2 128 (64::Float)) :: Sampler_UV Float
+sampler  = linear1 (V2 1024 (512::Float)) :: Sampler_UV Float
 texture  = mix mixer 
              (gradient_UV ((red :~: yellow) :~: (black :~: blue)) . tile (V2 8 4))
              (solid magenta)
